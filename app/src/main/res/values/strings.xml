@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">ZYXReader</string>
+    <string name="retrieving_articles_msg">retrieving articles from server. please wait..</string>
+    <string name="could_not_retrieve_msg">could not retrieve articles from server.. retry please.</string>
+</resources>
