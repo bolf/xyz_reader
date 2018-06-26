@@ -75,7 +75,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadArticles(){
-        //check the connectivity
+        if(! ArticleNetworkUtils.networkIsAvailable(this)){
+            Toast.makeText(MainActivity.this, "network is down now..",Toast.LENGTH_LONG).show();
+            findViewById(R.id.list_loading_progressBar).setVisibility(View.GONE);
+            findViewById(R.id.floatingActionButton_reloadrv).setVisibility(View.VISIBLE);
+            return;
+        }
         Toast.makeText(this, R.string.retrieving_articles_msg,Toast.LENGTH_SHORT).show();
         Call<List<Article>> articlesCall = ArticleNetworkUtils.getArticleNetService().getArticles("xyz-reader-json");
         articlesCall.enqueue(new Callback<List<Article>>() {
@@ -109,7 +114,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<List<Article>> call, Throwable t) {
                 Toast.makeText(MainActivity.this, R.string.could_not_retrieve_msg,Toast.LENGTH_LONG).show();
-                t.printStackTrace();
                 findViewById(R.id.list_loading_progressBar).setVisibility(View.GONE);
                 findViewById(R.id.floatingActionButton_reloadrv).setVisibility(View.VISIBLE);
             }
